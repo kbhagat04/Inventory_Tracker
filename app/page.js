@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { firestore } from "@/firebase";
 import { Box, Modal, Typography, Stack, TextField, Button, capitalize } from "@mui/material";
 import { collection, getDocs, query, setDoc , getDoc, doc, deleteDoc} from "firebase/firestore";
+require('dotenv').config();
 
 export default function Home() {
   const [inventory, setInventory] = useState([]);
