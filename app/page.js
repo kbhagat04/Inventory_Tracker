@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { firestore } from "@/firebase";
-import { Box, Modal, Typography, Stack, TextField, Button, capitalize } from "@mui/material";
+import { Box, Modal, Typography, Stack, TextField, Button, capitalize, Divider } from "@mui/material";
 import { collection, getDocs, query, setDoc , getDoc, doc, deleteDoc} from "firebase/firestore";
 require('dotenv').config();
 
@@ -102,28 +102,69 @@ export default function Home() {
           <Typography variant="h4" color="white" sx={{ flexGrow: 1 }}>Inventory</Typography>
           <Button variant="contained" onClick={() => {
         handleOpen();
-      }}>
-        Add new item
+      }}  sx={{color:"#121212", fontWeight: "bold", padding: "18px", borderRadius: "15px", textTransform:"none"}} >
+        + Add Item
       </Button>
         
       </Box>
-      <Stack border="1px solid black" width={"80vw"} height={"400px"} overflow={"auto"} boxShadow={"0px 4px 50px #0039a6"}>
-        <Stack direction={"row"} bgcolor={"blue"} padding={3}>
+
+      < Stack border="1px solid black" width={"80vw"} height={"300px"} overflow={"auto"} boxShadow={"0px 4px 50px #0039a6"}> 
+        <Stack direction={"row"} bgcolor={"blue"} padding={3} justifyContent={"space-between"} paddingLeft={5} paddingRight={12}>
           <Typography variant="h5" color={"WHITE"} textAlign={"center"}>Item</Typography>
-          </Stack>       
-        {
-          inventory.map(({name, quantity}) => (
-            <Box key={name} width="100%" minHeight={"10px"} display={"flex"} alignItems={"center"} justifyContent={"space-between"} bgcolor={"white"} padding={5}>
-              <Typography variant="h5" color={"black"} textAlign={"center"} textTransform={"capitalize"}>{name}</Typography>
-              <Typography variant="h5" color={"black"} textAlign={"center"} textTransform={"capitalize"}>{quantity}</Typography>
-              <Button variant="contained" onClick={()=>  {
-                removeItems(name);
-              }}>Remove</Button>
-            </Box>
+          <Typography variant="h5" color={"WHITE"} textAlign={"center"}>Quantity</Typography>
+          <Typography variant="h5" color={"WHITE"} textAlign={"center"}>Actions</Typography>
+        </Stack>
+        <Stack direction={"row"} bgcolor={"white"} padding={3} paddingLeft={4} justifyContent={"space-between"}>
+        <Stack direction={"column"} spacing={3.5} display={"flex"}  >
+        { inventory.map(({name}) => (
+          
+          <Typography variant="h5" color={"black"} textAlign={"center"}>{name}</Typography>
+              
         ))
-        }
+      }
+      </Stack>  
+      <Stack direction={"column"} spacing={3.5} display={"flex"} >
+      { inventory.map(({quantity}) => (
+          
+          <Typography variant="h5" color={"black"} textAlign={"center"}>{quantity}</Typography>
+              
+        ))
+      }
+      </Stack>
+      <Stack direction={"column"} spacing={3} display={"flex"}  >
+        { inventory.map(({name}) => (
+          <Stack direction={"row"} spacing={3} display={"flex"} justifyContent={"space-between"}>
+            <Button variant="contained" onClick={() => {
+            addItem(name);
+          }}>Add</Button>
+            
+          <Button variant="contained" onClick={() => {
+            removeItems(name);
+          }}>Remove</Button>
+            </Stack>  
+        ))
+      }
+      
+      </Stack>
+      </Stack>
+          
       </Stack>
       </Box>
+      <Stack direction={"row"} spacing={3} display={"flex"} justifyContent={"center"} marginTop={"50px"} >
+        <Box bgcolor={"grey"} width={"150px"} height={"150px"} display="flex" justifyContent="center" alignItems="center" gap={2}  borderRadius={"10px"} >
+          <Stack direction={"column"} spacing={2} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+          <Typography variant="h7" color={"white"} textAlign={"center"}>Total Items</Typography>
+          <Typography variant="h5" color={"white"}>{inventory.length}</Typography>
+          </Stack>
+        </Box>
+        <Box bgcolor={"grey"} width={"150px"} height={"150px"} display="flex" justifyContent="center" alignItems="center" gap={2}  borderRadius={"10px"} >
+          <Stack direction={"column"} spacing={2} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+          <Typography variant="h7" color={"white"} textAlign={"center"}>Total Quantity</Typography>
+          <Typography variant="h5" color={"white"}>{inventory.reduce((acc, {quantity}) => acc + quantity, 0)}</Typography>
+          </Stack>
+        </Box>
+      </Stack>
     </Box>
+    
   );
 }
