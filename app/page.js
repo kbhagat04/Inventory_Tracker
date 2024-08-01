@@ -64,6 +64,7 @@ export default function Home() {
       justifyContent="center" 
       alignItems="center"
       gap={2}
+      bgcolor="#121212"
     >
       <Modal open={open} onClose={handleClose}>
         <Box 
@@ -94,22 +95,26 @@ export default function Home() {
           </Stack>
         </Box>
       </Modal>
-      <Button variant="contained" onClick={() => {
+      
+      <Box >
+        <Box  height="100px" display="flex" alignItems="center" justifyContent={"space-between"} padding={5}>
+          <Typography variant="h4" color="white" sx={{ flexGrow: 1 }}>Inventory</Typography>
+          <Button variant="contained" onClick={() => {
         handleOpen();
       }}>
         Add new item
       </Button>
-      <Box border="1px solid black">
-        <Box width="800px" height="100px" bgcolor="lightblue" display="flex" alignItems="center" justifyContent="center">
-          <Typography variant="h2" color="black">Inventory</Typography>
         
       </Box>
-      <Stack width={"800px"} height={"300px"} spacing={2} overflow={"auto"}>
+      <Stack border="1px solid black" width={"80vw"} height={"400px"} overflow={"auto"} boxShadow={"0px 4px 50px #0039a6"}>
+        <Stack direction={"row"} bgcolor={"blue"} padding={3}>
+          <Typography variant="h5" color={"WHITE"} textAlign={"center"}>Item</Typography>
+          </Stack>       
         {
           inventory.map(({name, quantity}) => (
-            <Box key={name} width="100%" minHeight={"150px"} display={"flex"} alignItems={"center"} justifyContent={"space-between"} bgcolor={"white"} padding={5}>
-              <Typography variant="h3" color={"black"} textAlign={"center"} textTransform={"capitalize"}>{name}</Typography>
-              <Typography variant="h3" color={"black"} textAlign={"center"} textTransform={"capitalize"}>{quantity}</Typography>
+            <Box key={name} width="100%" minHeight={"10px"} display={"flex"} alignItems={"center"} justifyContent={"space-between"} bgcolor={"white"} padding={5}>
+              <Typography variant="h5" color={"black"} textAlign={"center"} textTransform={"capitalize"}>{name}</Typography>
+              <Typography variant="h5" color={"black"} textAlign={"center"} textTransform={"capitalize"}>{quantity}</Typography>
               <Button variant="contained" onClick={()=>  {
                 removeItems(name);
               }}>Remove</Button>
